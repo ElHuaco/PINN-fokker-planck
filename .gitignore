@@ -534,4 +534,3 @@ FodyWeavers.xsd
 *.swp
 .DS_Store
 **/.ipynb_checkpoints/
-**/DATA/
