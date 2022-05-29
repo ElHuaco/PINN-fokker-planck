@@ -6,19 +6,19 @@ from fplanck import fokker_planck, boundary, uniform_pdf, harmonic_potential, ga
 
 nm = 1e-9
 viscosity = 1e-3
-radius = 20*nm
+radius = 20e-10
 drag = 6*np.pi*viscosity*radius
 
 U = harmonic_potential(0, 3e-7)
 sim = fokker_planck(temperature=300, drag=drag, extent=200*nm,
-            resolution=2/256*nm, boundary=boundary.reflecting, potential=U)
+            resolution=1*nm, boundary=boundary.reflecting, potential=U)
 
 ### steady-state solution
 steady = sim.steady_state()
 
 ### time-evolved solution
 #pdf = uniform_pdf(lambda x: (x > 100*nm) & (x < 150*nm))
-pdf = gaussian_pdf(50*nm, 5*nm)
+pdf = gaussian_pdf(15*nm, 5*nm)
 p0 = pdf(sim.grid[0])
 Nsteps = 200
 time, Pt = sim.propagate_interval(pdf, 3e-3, Nsteps=Nsteps)
