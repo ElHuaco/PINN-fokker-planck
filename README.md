@@ -1,10 +1,7 @@
 # PINNs-Review
 
-## Code repositories to take a look
-
-[Baiesi's paper](https://github.com/maziarraissi/PINNs)
-
-[SciML PINN docs, in the Julia language tho](https://github.com/SciML/NeuralPDE.jl)
-
-## Need a PDE solver to generate training data
-
+## Final Goals:
+1) GridSearch on NN architecture
+2) Loss landscape w.r.t. MSE(f) regularization parameter
+3) 2D harmonic potential
+4) Error bars on training w.r.t. some hyper-parameter
