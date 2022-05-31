@@ -10,17 +10,16 @@ viscosity = 1e-3
 radius = 20e-10
 drag = 6*np.pi*viscosity*radius
 
-U = harmonic_potential((0,0), 3e-7)
+U = harmonic_potential((50*nm, 50*nm), 7.5e-6)
 sim = fokker_planck(temperature=300, drag=drag, extent=[200*nm, 200*nm],
-            resolution=10*nm, boundary=boundary.reflecting, potential=U)
+            resolution=2*nm, boundary=boundary.reflecting, potential=U)
 
 ### time-evolved solution
 pdf = gaussian_pdf(center=(-75*nm, -75*nm), width=30*nm)
 p0 = pdf(*sim.grid)
 
 Nsteps = 200
-time, Pt = sim.propagate_interval(pdf, 2e-3, Nsteps=Nsteps)
-
+time, Pt = sim.propagate_interval(pdf, 2e-5, Nsteps=Nsteps)
 ### animation
 fig, ax = plt.subplots(subplot_kw=dict(projection='3d'), constrained_layout=True)
 
@@ -29,7 +28,7 @@ fig, ax = plt.subplots(subplot_kw=dict(projection='3d'), constrained_layout=True
 
 # Plot final
 surf = ax.plot_surface(*sim.grid/nm, Pt[-1], cmap='viridis')
-
+ax.set_zlim(0, 0.0018)
 #ax.set_zlim([0,np.max(Pt)])
 #ax.autoscale(False)
 
@@ -44,5 +43,11 @@ def update(i):
 anim = FuncAnimation(fig, update, frames=range(Nsteps), interval=30)
 '''
 ax.set(xlabel='x (nm)', ylabel='y (nm)', zlabel='normalized PDF')
+
+
+print(Pt.shape)
+import pickle
+filename = '/Users/max/Documents/Lab_b/PINNs-Review/src/OUR CODE/simulations/2dnumerical_solution2.sav'
+pickle.dump(Pt, open(filename, 'wb'))
 
 plt.show()
