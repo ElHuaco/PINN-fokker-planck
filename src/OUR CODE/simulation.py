@@ -36,14 +36,14 @@ def simulation(x):
         ani.save(file, writer='ffmpeg',fps=fps)
     else:
         psol = model.T
-        t = np.linspace(0, 2e-4, 200)
+        t = np.linspace(0, 3e-5, 100)
         x = np.linspace(-0.5, 0.5, 100)
         y = np.linspace(-0.5, 0.5, 100)
         X, Y, T = np.meshgrid(x,y,t)
 
 
         fps = 15 # frame per sec
-        frn = 175 # frame number of the animation
+        frn = 98 # frame number of the animation
 
         def update_plot(frame_number, psol, plot):
             plot[0].remove()
@@ -55,7 +55,7 @@ def simulation(x):
 
 
         plot = [ax.plot_surface(X[:,:,0], Y[:,:,0], psol[:,:,0], color='0.75', rstride=1, cstride=1)]
-        ax.set_zlim(0, 0.0018)
+        ax.set_zlim(0, 1)
         ax.set_xlim(-0.5, 0.5)
         ax.set_ylim(-0.5, 0.5)
 
