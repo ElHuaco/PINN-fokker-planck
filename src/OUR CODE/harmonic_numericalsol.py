@@ -25,27 +25,34 @@ steady = sim.steady_state()
 ### time-evolved solution
 #pdf = uniform_pdf(lambda x: (x > 100*nm) & (x < 150*nm))
 x = np.linspace(-0.1, 0.25, 350)
-#pdf = gaussian_pdf(75*nm, 50*nm)
-pdf=(norm.pdf(x,loc=0.15,scale=0.05)).T
+pdf = gaussian_pdf(75*nm, 50*nm)
+#pdf=(norm.pdf(x,loc=0.15,scale=0.05)).T
 p0=(norm.pdf(sim.grid[0],loc=0.15,scale=0.05)).T
 #p0 = pdf(sim.grid[0])
 Nsteps = 200
-time, Pt = sim.propagate_interval(pdf, 2e-4, Nsteps=Nsteps, normalize=False)
+t_lower = 0
+A = 3e-7 / drag
+t_upper = 0.69 / A  # Typical Ornstein-Uhlenbeck time is ln(2) / A
+_, Pt = sim.propagate_interval(pdf, t_upper, Nsteps=Nsteps, normalize=False)
 
 ### animation
-fig, ax = plt.subplots()
+#fig, ax = plt.subplots()
 
-ax.plot(x, steady, color='black', ls='--', alpha=.5)
-ax.plot(x, Pt[1], color='blue', alpha=.5)
-ax.plot(x, p0, color='red', ls='--', alpha=.3)
-ax.set(xlabel='x (nm)', ylabel='normalized PDF')
+#ax.plot(x, steady, color='black', ls='--', alpha=.5)
+#ax.plot(x, Pt[1], color='blue', alpha=.5)
+#ax.plot(x, p0, color='red', ls='--', alpha=.3)
+#ax.set(xlabel='x (nm)', ylabel='normalized PDF')
 
-#filename = '/Users/max/Documents/Lab_b/PINNs-Review/src/OUR CODE/simulations/numerical_solution.sav'
-#pickle.dump(Pt ,open(filename, 'wb'))
+filename = 'simulations/numerical_solution.sav'
+pickle.dump(Pt, open(filename, 'wb'))
 
-x_lower = -0.1
-x_upper = 0.25
+#x_lower = -0.1
+#x_upper = 0.25
 
+#plt.show()
 
+t_large = t_upper * 10
+_, Pt = sim.propagate_interval(pdf, t_large, Nsteps=Nsteps*10, normalize=False)
+filename = 'simulations/large_t_numerical_solution.sav'
+pickle.dump(Pt, open(filename, 'wb'))
 
-plt.show()
