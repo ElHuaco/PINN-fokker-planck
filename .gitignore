@@ -534,6 +534,7 @@ FodyWeavers.xsd
 logs/
 data/
 simulations/
+models/
 *.swp
 .DS_Store
 **/.ipynb_checkpoints/
