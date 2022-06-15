@@ -531,6 +531,9 @@ FodyWeavers.xsd
 
 # Manually
 .idea/
+logs/
+data/
+simulations/
 *.swp
 .DS_Store
 **/.ipynb_checkpoints/
