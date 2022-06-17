@@ -5,7 +5,7 @@ import numpy as np
 from pylab import *
 
 
-filename = '/Users/max/Documents/Lab_b/PINNs-Review/src/OUR CODE/simulations/2dnumerical_solution2.sav'
+filename = '/Users/max/Documents/Lab_b/PINNs-Review/src/models/2d_diffusion_results.sav'
 model = pickle.load(open(filename, 'rb'))
 
 def simulation(x):
@@ -22,17 +22,17 @@ def simulation(x):
             plot[0] = ax.plot_surface(X[:,:,0], Y[:,:,0], psol[:,:,frame_number], cmap="inferno")
             ax.set_title('predicted model at time: {:.2f}'.format(t[frame_number]))
 
-        fig = plt.figure()
+        fig = plt.figure(dpi=300)
         ax = fig.add_subplot(111, projection='3d')
 
 
         plot = [ax.plot_surface(X[:,:,0], Y[:,:,0], psol[:,:,0], color='0.75', rstride=1, cstride=1)]
-        #ax.set_zlim(0, 0.0005)
-        #ax.set_xlim(-0.5, 0.5)
-        #ax.set_ylim(-0.5, 0.5)
+        ax.set_zlim(0, 1)
+        ax.set_xlim(-1, 1)
+        ax.set_ylim(-1, 1)
 
         ani = animation.FuncAnimation(fig, update_plot, frn, fargs=(psol, plot), interval=1000/fps)
-        file = '/Users/max/Documents/Lab_b/PINNs-Review/src/OUR CODE/simulations/diffusion2_2d.mp4'
+        file = '/Users/max/Documents/Lab_b/PINNs-Review/src/OUR CODE/simulations/diffusion3_2d.mp4'
         ani.save(file, writer='ffmpeg',fps=fps)
     else:
         psol = model.T
@@ -63,4 +63,4 @@ def simulation(x):
         file = '/Users/max/Documents/Lab_b/PINNs-Review/src/OUR CODE/simulations/diffusion2_2d.mp4'
         ani.save(file, writer='ffmpeg',fps=fps)
 
-simulation(1)
+simulation(0)
